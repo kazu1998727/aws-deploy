@@ -46,8 +46,8 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd /home/aws-deploy
-            export PNPM_HOME="/root/.local/share/pnpm"
-            export PATH="$PNPM_HOME:$PATH"
-            pnpm install --prod --frozen-lockfile
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            cd /var/www/your-app
+            pnpm install --prod
             pm2 restart nextjs || pm2 start pnpm --name "nextjs" -- start
